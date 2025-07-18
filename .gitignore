@@ -1,0 +1,14 @@
+# Node modules
+node_modules/
+
+# Entornos
+.env
+
+# Logs
+*.log
+
+# Sistema
+.DS_Store
+
+# VSCode
+.vscode/
