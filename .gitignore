@@ -1,14 +1,21 @@
 # Node modules
 node_modules/
+backend/node_modules/
+frontend/node_modules/
 
 # Entornos
 .env
+backend/.env
+frontend/.env
 
 # Logs
 *.log
 
-# Sistema
-.DS_Store
+# Salidas de construcción
+dist/
+frontend/dist/
+backend/dist/
 
-# VSCode
+# Archivos del sistema y editores
+.DS_Store
 .vscode/
