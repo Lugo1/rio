@@ -1,28 +1,38 @@
-const express = require('express')
-const cors = require('cors')
-const app = express()
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config(); // 👈 Asegúrate de que esté aquí
+////npm install helmet express-rate-limit
+//Helmet protege tu app configurando cabeceras HTTP como Content-Security-Policy, X-Powered-By, X-Frame-Options, etc.
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+
+
+const app = express();
+
+// 🔐 Configurar CORS dinámico
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || '*', // fallback a '*'
+};
+
+// Middlewares
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(helmet());
+
+const limiter = rateLimit({ windowMs: 60000, max: 60 });
+app.use(limiter);
+
+// 🛣️ Rutas
 const usuariosRoutes = require('./routes/usuarios.routes');
-
-require('dotenv').config()
-
-app.use(cors())
-app.use(express.json())
 app.use('/api/usuarios', usuariosRoutes);
 
-// Rutas
-app.get('/api/usuarios', async (req, res) => {
-  const pool = require('./db'); // usa el archivo que ya creaste
-
-  try {
-    const result = await pool.query('SELECT * FROM usuarios');
-    res.json(result.rows);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error al obtener los usuarios' });
-  }
+// 🧯 Manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ mensaje: 'Error interno del servidor' });
 });
 
+app.listen(process.env.PORT || 4000, () => {
+  console.log(`Servidor backend corriendo en http://localhost:${process.env.PORT || 4000}`);
+});
 
-app.listen(4000, () => {
-  console.log('Servidor backend corriendo en http://localhost:4000')
-})
