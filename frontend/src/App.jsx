@@ -1,4 +1,12 @@
 import { useEffect, useState } from 'react';
+//const API_URL = import.meta.env.VITE_API_URL;
+// 🧠 Esto se adapta a local o producción automáticamente
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:4000"
+    : import.meta.env.VITE_API_URL;
+
+
 
 function App() {
   const [usuarios, setUsuarios] = useState([]);
@@ -6,7 +14,8 @@ function App() {
   const [correo, setCorreo] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/usuarios')
+    //fetch('http://localhost:4000/api/usuarios')
+    fetch(`${API_URL}/api/usuarios`)
       .then(res => res.json())
       .then(data => {
         console.log('Usuarios recibidos:', data);
@@ -17,7 +26,8 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('http://localhost:4000/api/usuarios', {
+    //const res = await fetch('http://localhost:4000/api/usuarios', {
+    const res = await fetch(`${API_URL}/api/usuarios`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nombre, correo })
@@ -29,7 +39,8 @@ function App() {
   };
 
   const handleEliminar = async (id) => {
-  await fetch(`http://localhost:4000/api/usuarios/${id}`, {
+  //await fetch(`http://localhost:4000/api/usuarios/${id}`, {
+  await fetch(`${API_URL}/api/usuarios/${id}`, {
     method: 'DELETE'
   });
   setUsuarios(usuarios.filter(usuario => usuario.id !== id));
