@@ -25,6 +25,8 @@ dist-ssr
 
 # Node modules
 node_modules/
+.env
+
 backend/node_modules/
 frontend/node_modules/
 

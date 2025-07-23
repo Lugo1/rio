@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../config/db'); // <- tu conexión a PostgreSQL
+const pool = require('../db'); // <- tu conexión a PostgreSQL
 const {
   obtenerUsuarios,
   crearUsuario,
