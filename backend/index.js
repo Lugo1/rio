@@ -11,9 +11,25 @@ const rateLimit = require('express-rate-limit');
 const app = express();
 
 // 🔐 Configurar CORS dinámico
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://rio-mauve-five.vercel.app'
+];
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || '*', // fallback a '*'
+  origin: function (origin, callback) {
+    // Permitir si no hay origin (como Postman) o si está en la lista
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS: ' + origin));
+    }
+  },
+  credentials: true
 };
+
+app.use(cors(corsOptions));
+
 
 // Middlewares
 app.use(cors(corsOptions));
