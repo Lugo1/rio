@@ -2,9 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = import.meta.env.DEV
-  ? "http://localhost:4000"
-  : import.meta.env.VITE_BACKEND_URL;
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function Register() {
   const [nombre, setNombre] = useState('');

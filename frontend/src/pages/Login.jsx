@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUsuario } from '../services/authService';
 
-const API_URL = import.meta.env.DEV
-  ? "http://localhost:4000"
-  : import.meta.env.VITE_BACKEND_URL;
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function Login() {
   const [correo, setCorreo] = useState('');
