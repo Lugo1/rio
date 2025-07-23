@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Usuarios from './pages/Usuarios'; // <- este es tu código actual
+import ProtectedRoute from './components/ProtectedRoute';
+
 
 function App() {
   return (

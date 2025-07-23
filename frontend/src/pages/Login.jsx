@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { loginUsuario } from '../services/authService';
 
 const API_URL = import.meta.env.DEV
   ? "http://localhost:4000"
@@ -55,35 +56,44 @@ export default function Login() {
     <div className="max-w-md mx-auto mt-10 p-6 border rounded-xl shadow-xl">
       <h2 className="text-2xl font-bold mb-4">Iniciar Sesión</h2>
       {error && <p className="text-red-500 mb-2">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Correo"
-          value={correo}
-          onChange={(e) => setCorreo(e.target.value)}
-          className="w-full p-2 mb-3 border rounded"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={contraseña}
-          onChange={(e) => setContraseña(e.target.value)}
-          className="w-full p-2 mb-3 border rounded"
-          required
-        />
+      
+      <form onSubmit={handleSubmit} className="space-y-4">
+  <div>
+    <label htmlFor="correo" className="block mb-1 font-medium">Correo</label>
+    <input
+      id="correo"
+      type="email"
+      placeholder="ejemplo@correo.com"
+      value={correo}
+      onChange={(e) => setCorreo(e.target.value)}
+      className="w-full p-2 border rounded"
+      required
+    />
+  </div>
+  <div>
+    <label htmlFor="contraseña" className="block mb-1 font-medium">Contraseña</label>
+    <input
+      id="contraseña"
+      type="password"
+      placeholder="Tu contraseña"
+      value={contraseña}
+      onChange={(e) => setContraseña(e.target.value)}
+      className="w-full p-2 border rounded"
+      required
+    />
+  </div>
 
-         {error && <p className="text-red-500">{error}</p>}
+  {error && <p className="text-red-500 text-sm">{error}</p>}
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-          disabled={loading} // <-- botón se desactiva
-        >
-          {loading ? 'Cargando...' : 'Entrar'}
-          
-        </button>
-      </form>
+  <button
+    type="submit"
+    className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 disabled:opacity-60"
+    disabled={loading}
+  >
+    {loading ? 'Cargando...' : 'Entrar'}
+  </button>
+</form>
+
     </div>
   );
 }

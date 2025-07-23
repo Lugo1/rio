@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const authRoutes = require('./routes/auth.routes');
 require('dotenv').config(); // 👈 Asegúrate de que esté aquí
 ////npm install helmet express-rate-limit
 //Helmet protege tu app configurando cabeceras HTTP como Content-Security-Policy, X-Powered-By, X-Frame-Options, etc.
@@ -18,6 +19,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(helmet());
+//app.use('/api/auth', authRoutes);
+app.use('/api/auth', require('./routes/auth.routes'));
+
 
 const limiter = rateLimit({ windowMs: 60000, max: 60 });
 app.use(limiter);
