@@ -11,7 +11,7 @@ export default function LabeledInput({
 }) {
   return (
     <div className="w-full mb-4">
-      <label htmlFor={id} className="block text-sm font-semibold mb-1">
+      <label htmlFor={id} className="block text-sm font-semibold mb-1 text-white">
         {label}
       </label>
       <div className="flex items-center gap-2 bg-gray-800 px-3 py-2 rounded-lg focus-within:ring-2 focus-within:ring-[var(--color-primary)]">
@@ -24,7 +24,8 @@ export default function LabeledInput({
           value={value}
           onChange={onChange}
           required={required}
-          className="bg-transparent outline-none text-sm w-full text-white placeholder:text-gray-500"
+          style={{ color: 'white' }}
+          className="w-full bg-transparent outline-none text-white placeholder-white !text-white"
         />
       </div>
     </div>

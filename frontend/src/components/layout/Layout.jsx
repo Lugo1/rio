@@ -1,14 +1,13 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-white font-sans">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-white">
       <Navbar />
-      <main className="flex-1 container max-w-7xl mx-auto px-4 py-8">
-        <Outlet />
+      <main className="pt-20 px-4">
+        <Outlet /> {/* Aquí sí se renderizan las páginas internas */}
       </main>
       <Footer />
     </div>
@@ -16,3 +15,4 @@ const Layout = () => {
 };
 
 export default Layout;
+

@@ -11,7 +11,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-white flex flex-col items-center justify-center px-4">
       <div className="max-w-4xl mx-auto bg-gray-800 p-6 rounded-xl shadow-lg">
         <h1 className="text-3xl font-bold text-green-400 mb-4">Bienvenido al Dashboard</h1>
 

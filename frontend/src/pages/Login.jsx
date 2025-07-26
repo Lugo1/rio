@@ -5,6 +5,7 @@ import { Mail, Lock } from 'lucide-react';
 import LabeledInput from '../components/ui/LabeledInput';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import { motion } from 'framer-motion';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -52,11 +53,21 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[var(--bg-dark)] px-4">
-      <Card className="w-full max-w-md bg-[var(--bg-darker)] shadow-2xl rounded-2xl p-8 border border-gray-700">
+    <div className="min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-white flex flex-col items-center justify-center px-4">
+      <Card className="w-full max-w-md bg-[var(--bg-darker)] shadow-2xl rounded-2xl p-8 border border-gray-700 ">
+
+        <motion.div
+          className="max-full bg-white/10 border border-white/10 backdrop-blur-lg shadow-lg rounded-2xl p-10 text-white"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+
         <h2 className="text-2xl font-bold mb-6 text-center text-[var(--color-primary)]">
           Iniciar sesión
         </h2>
+
+         <div className="w-full max-w-md flex justify-center">
 
         {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
 
@@ -87,6 +98,7 @@ export default function Login() {
             {loading ? 'Cargando...' : 'Entrar'}
           </Button>
         </form>
+        </div>
 
         <p className="text-sm text-center text-gray-400 mt-6">
           ¿No tienes una cuenta?{' '}
@@ -94,7 +106,10 @@ export default function Login() {
             Regístrate
           </a>
         </p>
-      </Card>
+        
+      </motion.div>
+    </Card>
+      
     </div>
   );
 }

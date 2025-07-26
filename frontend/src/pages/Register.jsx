@@ -1,73 +1,87 @@
-  import { useState } from 'react';
-  import { useNavigate } from 'react-router-dom';
-  import LabeledInput from '../components/ui/LabeledInput'; // ✅ Usamos el componente reutilizable
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
 
-  const API_URL = import.meta.env.VITE_BACKEND_URL;
+import { Mail, Lock } from 'lucide-react';
+import LabeledInput from '../components/ui/LabeledInput';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
 
-  export default function Register() {
-    // 📌 Estados para los campos del formulario
-    const [nombre, setNombre] = useState('');
-    const [correo, setCorreo] = useState('');
-    const [contraseña, setContraseña] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 
-    const navigate = useNavigate();
+export default function Register() {
+  const [nombre, setNombre] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [contraseña, setContraseña] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-    // 📤 Manejo del formulario de registro
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+  const navigate = useNavigate();
 
-      // 🛑 Validación simple
-      if (!nombre || !correo || !contraseña) {
-        setError('Todos los campos son obligatorios');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!nombre || !correo || !contraseña) {
+      setError('Todos los campos son obligatorios');
+      return;
+    }
+
+    if (contraseña.length < 6) {
+      setError('La contraseña debe tener al menos 6 caracteres');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const resp = await fetch(`${API_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, correo, contraseña }),
+      });
+
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        setError(data.mensaje || 'Error al registrarse');
         return;
       }
 
-      if (contraseña.length < 6) {
-        setError('La contraseña debe tener al menos 6 caracteres');
-        return;
-      }
+      localStorage.setItem('token', data.token);
+      navigate('/dashboard');
+    } catch (err) {
+      console.error(err);
+      setError('Error al conectar con el servidor');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      setLoading(true);   // ⏳ Inicia carga
-      setError('');       // 🔄 Limpia errores previos
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-white flex flex-col items-center justify-center px-4">
+      <Card className="w-full max-w-md bg-[var(--bg-darker)] shadow-2xl rounded-2xl p-8 border border-gray-700 ">
 
-      try {
-        const resp = await fetch(`${API_URL}/api/auth/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nombre, correo, contraseña }),
-        });
+        <motion.div
+          className="max-full bg-white/10 border border-white/10 backdrop-blur-lg shadow-lg rounded-2xl p-10 text-white"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-2xl font-bold mb-6 text-center text-[var(--color-primary)]">
+          Crear cuenta
+          </h2>
 
-        const data = await resp.json();
+          <div className="w-full max-w-md flex justify-center">
 
-        if (!resp.ok) {
-          setError(data.mensaje || 'Error al registrarse');
-          return;
-        }
+          {error && (
+            <p className="text-red-400 text-center mb-4">{error}</p>
+          )}
 
-        // ✅ Guardar token y redirigir al dashboard
-        localStorage.setItem('token', data.token);
-        navigate('/dashboard');
-      } catch (err) {
-        console.error(err);
-        setError('Error al conectar con el servidor');
-      } finally {
-        setLoading(false);  // ✅ Finaliza carga
-      }
-    };
-
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black via-gray-900 to-green-700">
-        <div className="w-full max-w-md bg-gray-800 text-white p-8 rounded-2xl shadow-2xl">
-          <h2 className="text-3xl font-bold text-green-400 mb-6 text-center">Crear cuenta</h2>
-
-          {/* 🛑 Error general */}
-          {error && <p className="text-red-400 mb-4 text-center">{error}</p>}
-
-          {/* 📝 Formulario de registro */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* 👤 Campo nombre */}
+
+            {/* Nombre */}
             <LabeledInput
               id="nombre"
               label="Nombre"
@@ -76,9 +90,10 @@
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               required
+              icon={FaUser}
             />
 
-            {/* 📧 Campo correo */}
+            {/* Correo */}
             <LabeledInput
               id="correo"
               label="Correo"
@@ -87,9 +102,10 @@
               value={correo}
               onChange={(e) => setCorreo(e.target.value)}
               required
+              icon={FaEnvelope}
             />
 
-            {/* 🔒 Campo contraseña */}
+            {/* Contraseña */}
             <LabeledInput
               id="contraseña"
               label="Contraseña"
@@ -98,18 +114,27 @@
               value={contraseña}
               onChange={(e) => setContraseña(e.target.value)}
               required
+              icon={FaLock}
             />
 
-            {/* ✅ Botón de envío */}
-            <button
-              type="submit"
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300 disabled:opacity-60"
-              disabled={loading}
-            >
-              {loading ? 'Registrando...' : 'Registrarse'}
-            </button>
+            <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'Registrando...' : 'Registrarse'}
+              </Button>
+            
           </form>
-        </div>
-      </div>
-    );
-  }
+          </div>
+
+          <p className="text-sm text-center text-gray-400 mt-6">
+          ¿Ya tienes una cuenta?{' '}
+          <a href="/Login" className="text-[var(--color-primary)] hover:underline">
+            Inicia sesión
+          </a>
+          </p>
+
+        </motion.div>
+
+      </Card>
+    </div> 
+
+  );
+}
