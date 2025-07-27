@@ -57,7 +57,7 @@ const Home = () => {
 
             <Link to="/register">
               <Button className="btn-xl" variant='outline'>
-                Área de Clientes
+                Área de Abogados
               </Button>
             </Link>
           </motion.div>
