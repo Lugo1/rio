@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Usuarios from './pages/Usuarios';
 import ProtectedRoute from './components/ProtectedRoute';
+import Abogados from "./pages/Abogados";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/usuarios" element={<Usuarios />} />
+          <Route path="/abogados" element={<Abogados />} />
         </Route>
       </Routes>
     </BrowserRouter>

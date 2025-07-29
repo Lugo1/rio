@@ -4,15 +4,23 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-white">
-      <Navbar />
-      <main className="pt-20 px-4">
-        <Outlet /> {/* Aquí sí se renderizan las páginas internas */}
-      </main>
-      <Footer />
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Fondo con ondas */}
+      <div className="wave-container absolute top-0 left-0 w-full h-full -z-10">
+        <div className="wave wave1"></div>
+        <div className="wave wave2"></div>
+      </div>
+
+      {/* Contenido general */}
+      <div className="flex flex-col min-h-screen relative z-10">
+        <Navbar />
+        <main className="flex-grow pt-[80px] px-4">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };
 
 export default Layout;
-

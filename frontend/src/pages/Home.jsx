@@ -1,16 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import Button from '../components/ui/Button';
-import Container from '../components/ui/Container';
-import logo from "../assets/logo0.png"; // Asegúrate de tener el logo en esta ruta
+  import { Link } from 'react-router-dom';
+  import { motion } from 'framer-motion';
+  import Button from '../components/ui/Button';
+  import Container from '../components/ui/Container';
+  import logo from "../assets/logo0.png"; // Asegúrate de tener el logo en esta ruta
 
 
-const Home = () => {
-  return (
-    <Container>
-      <div className="min-h-screen bg-[var(--color-bg)] text-white px-4 ">
-        <div className="flex flex-col items-center justify-center min-h-screen text-center space-y-10 py-20">
+  const Home = () => {
+    return (
+      <Container>
+        <div className="min-h-screen text-white">
+          <div className="flex flex-col items-center justify-center min-h-screen text-center space-y-10 py-20">
           
           {/* Logo estilo Apple */}
           <motion.img
@@ -34,7 +33,7 @@ const Home = () => {
 
           {/* Subtítulo ligero */}
           <motion.p
-            className="text-lg text-neutral-600"
+            className="text-lg text-white max-w-2xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
@@ -49,13 +48,13 @@ const Home = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
           >
-            <Link to="/login">
+            <Link to="/Abogados">
               <Button className="btn-xl" variant="primary">
                 Área de Clientes
               </Button>
             </Link>
 
-            <Link to="/register">
+            <Link to="/Login">
               <Button className="btn-xl" variant='outline'>
                 Área de Abogados
               </Button>

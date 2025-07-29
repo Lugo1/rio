@@ -1,4 +1,3 @@
-// src/components/ui/LabeledInput.jsx
 export default function LabeledInput({
   id,
   label,
@@ -8,14 +7,17 @@ export default function LabeledInput({
   value,
   onChange,
   required = false,
+  inputClassName = '',      // 🔹 para personalizar el input si se desea
+  containerClassName = '',  // 🔹 para personalizar el contenedor si se desea
+  iconClassName = 'text-black', // <- por defecto negro
 }) {
   return (
-    <div className="w-full mb-4">
-      <label htmlFor={id} className="block text-sm font-semibold mb-1 text-white">
+    <div className={`w-full mb-4 ${containerClassName}`}>
+      <label htmlFor={id} className="block text-lg font-semibold mb-1 text-white">
         {label}
       </label>
       <div className="flex items-center gap-2 bg-gray-800 px-3 py-2 rounded-lg focus-within:ring-2 focus-within:ring-[var(--color-primary)]">
-        {Icon && <Icon className="w-5 h-5 text-gray-400" />}
+        {Icon && <Icon className={`w-6 h-6 ${iconClassName}`} />}
         <input
           id={id}
           name={id}
@@ -24,8 +26,7 @@ export default function LabeledInput({
           value={value}
           onChange={onChange}
           required={required}
-          style={{ color: 'white' }}
-          className="w-full bg-transparent outline-none text-white placeholder-white !text-white"
+          className={`flex-1 bg-transparent outline-none text-xl text-white px-4 py-3 ${inputClassName}`}
         />
       </div>
     </div>
